@@ -35,7 +35,7 @@ public class ClientEndPoint extends AbstractEndPoint{
 		
 	}
 
-	public void sendMessage(String host,int port,byte[] req){
+	public void sendMessage(String host,int port,byte[] req) throws RPCException{
 		
 		//从连接池获取TCP连接
 		String connKey=getConnectionKey(host,port);
@@ -49,7 +49,7 @@ public class ClientEndPoint extends AbstractEndPoint{
 				connectionPool.put(connKey, conn);
 				
 				//TODO：开启读线程.连接同一个服务器，复用一个TCP连接
-				
+				new ResponseDealer(conn,connKey).start();
 			}
 		}
 		
@@ -62,6 +62,7 @@ public class ClientEndPoint extends AbstractEndPoint{
 		try {
 			writer.write(new String(req,CHARSET));
 			writer.newLine();
+			writer.flush();
 		} catch (IOException e) {
 			connectionPool.remove(connKey);
 			conn.destroy();
@@ -74,7 +75,7 @@ public class ClientEndPoint extends AbstractEndPoint{
 		return host+":"+port; 
 	}
 	
-	private RPCConnection createRPCConnection(String host,int port){
+	private RPCConnection createRPCConnection(String host,int port) throws RPCException{
 		Socket socket=null;
 		try {
 			socket = new Socket(host, port);
@@ -85,11 +86,9 @@ public class ClientEndPoint extends AbstractEndPoint{
 			try{
 				if(socket!=null)
 					socket.close();
-				
 			}catch(IOException ex){
-				ex.printStackTrace();
 			}
-			return null;
+			throw new RPCException(e.getMessage());
 		}
 	}
 	

@@ -64,8 +64,9 @@ public class CallerInvoker extends AbstractCallerInvoker{
 	@Override
 	protected byte[] encodeRequest() {
 		EagleProtoHandler protoHandler=(EagleProtoHandler)protocolHandler.get();
-		return protoHandler.encodeResponse();
+		return protoHandler.encodeRequest();
 	}
+	
 	
 	@Override
 	protected Object dealResponse(Caller caller) throws RPCException {

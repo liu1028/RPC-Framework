@@ -97,7 +97,7 @@ public class EagleProtoHandler implements ProtocolHandler, EagleHandler {
 	public void parseResponse(JSONObject mesg) {
 		response.setTag(mesg.getString(TAG));
 		response.setStatus(mesg.getString(STATUS));
-		response.setResult(RESULT);
+		response.setResult(mesg.get(RESULT));
 	}	
 	
 	@Override
@@ -112,6 +112,10 @@ public class EagleProtoHandler implements ProtocolHandler, EagleHandler {
 	
 	public byte[] encodeResponse(){
 		return jSerializator.serialize(response);
+	}
+	
+	public byte[] encodeRequest(){
+		return jSerializator.serialize(request);
 	}
 	
 	public void buildRequest(String serviceName,Method method,

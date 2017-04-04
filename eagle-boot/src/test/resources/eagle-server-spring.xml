@@ -20,6 +20,9 @@
 	
 	<bean class="org.eagle.boot.ServerBootStrap" />
 
-	<bean class="org.eagle.core.Exporter" c:interfaceClz="org.eagle.boot.Animal" c:obj-impl="animalImpl" />
+	<bean class="org.eagle.core.Exporter">
+		<constructor-arg name="interfaceClz" type="java.lang.Class" value="org.eagle.boot.api.Animal" />
+		<constructor-arg name="obj" ref="animalImpl" />
+	</bean>
 	
 </beans>

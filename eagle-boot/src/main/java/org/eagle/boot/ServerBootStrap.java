@@ -29,6 +29,7 @@ public class ServerBootStrap implements ApplicationContextAware{
 		//初始化服务器连接
 		ServerEndPoint server=new ServerEndPoint();
 		server.init();
+		server.start();
 	}
 
 	@Override

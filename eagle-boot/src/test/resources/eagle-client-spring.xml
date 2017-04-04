@@ -8,7 +8,6 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
@@ -16,10 +15,12 @@
 
 	<bean class="org.eagle.boot.ClientBootStrap" init-method="init" />
 
-	<bean id="proxyFactory" class="org.eagle.proxy.ProxyFactory" />
+	<!-- <bean id="proxyFactory" class="org.eagle.proxy.ProxyFactory" /> -->
 	
-	<bean id="animal" factory-bean="proxyFactory" factory-method="createProxy" 
-		c:interfaceClz="org.eagle.boot.Animal"  c:serviceName="/my/senix/app" />
-		
+	<bean id="animal" class="org.eagle.proxy.ProxyFactory" factory-method="createProxy">
+		<constructor-arg name="interfaceClz" type="java.lang.Class" value="org.eagle.boot.api.Animal" />
+		<constructor-arg name="serviceName" value="/my/senix/app" />
+	</bean>
+			
 
 </beans>

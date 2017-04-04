@@ -84,7 +84,7 @@ public abstract class AbstractSocketProcessor implements Processor,Lifecycle{
 			
 			writer.write(new String(response,DEFAULT_CHARSET));
 			writer.newLine(); //写一个换行符表示当前一个请求的完整数据已经发送完毕
-		
+			writer.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RPCException(RPCExcptionStatus.SOCKET_RECEIVE_DATA_FAILURE);
