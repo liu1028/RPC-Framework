@@ -44,8 +44,11 @@ public enum RPCExcptionStatus {
 	 */
 	TYPE_CAST_FAILURE("5000","类型转换异常"),
 	STRING_TO_DATE_PARSE_ERROR("5001","日期类型转换失败"),
-	VERSION_NOT_SUPPORT_COMPLEX_PARAMETERIZED_TYPE("5002","当前版本不支持复杂的泛型类型，包括：泛型的继承，泛型的嵌套。若有，请外套一个类来包装");
+	VERSION_NOT_SUPPORT_COMPLEX_PARAMETERIZED_TYPE("5002","当前版本不支持复杂的泛型类型，包括：泛型的继承，泛型的嵌套。若有，请外套一个类来包装"),
 	
+	
+	CLIENT_CALL_NOT_INTERFACE("5003","客户端代理的必须是接口！");
+
 	
 	private String statusCode;
 	
