@@ -115,7 +115,7 @@ public class ReferObjContext implements BeanFactory,MethodFactory,Lifecycle{
 				}else{
 //					Type type=param.getType();
 					Type type=param.getParameterizedType();
-					PairValue<String, Type> pair=new PairValue<>(argName,type);
+					PairValue<String, Type> pair=new PairValue<String, Type>(argName,type);
 					pairs.add(pair);
 				}
 			}

@@ -36,6 +36,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		
+		<maven.shade.plugin.version>2.2</maven.shade.plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -173,6 +175,17 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>${maven.shade.plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
 	</build>
 
 </project>
