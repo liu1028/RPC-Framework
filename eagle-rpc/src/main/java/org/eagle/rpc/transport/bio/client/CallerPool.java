@@ -25,6 +25,10 @@ public class CallerPool {
 		return pool.get(remoteId);
 	}
 	
+	public void remove(String remoteId){
+		pool.remove(remoteId);
+	}
+	
 	public static CallerPool getInstance(){
 		return callerPool;
 	}

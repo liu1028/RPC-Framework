@@ -84,7 +84,7 @@ public class CallerInvoker extends AbstractCallerInvoker{
 			Method method=caller.getMethod();
 			Type type=method.getGenericReturnType();
 			
-			return TypeConverter.compatible2JavaObject(response, type);
+			return TypeConverter.compatible2JavaObject(response.getResult(), type);
 			
 		}else if(fail.equalsIgnoreCase(response.getStatus())){
 			Object r=response.getResult();

@@ -47,15 +47,15 @@ public class ClientEndPoint extends AbstractEndPoint{
 			if(conn!=null){
 				//并加入连接池
 				connectionPool.put(connKey, conn);
+				
+				//TODO：开启读线程.连接同一个服务器，复用一个TCP连接
+				
 			}
 		}
 		
 		if(conn==null)
 			return;
-		
-		//TODO：开启读线程。。。
-		
-		
+			
 		
 		//发送请求。。。
 		BufferedWriter writer=conn.getWriter();
@@ -67,6 +67,7 @@ public class ClientEndPoint extends AbstractEndPoint{
 			conn.destroy();
 			e.printStackTrace();
 		}
+	
 	}
 	
 	private String getConnectionKey(String host,int port){

@@ -14,6 +14,8 @@ import org.eagle.common.util.ThreadHolder;
 import org.eagle.rpc.api.AbstractEndPoint;
 import org.eagle.rpc.api.Processor;
 import org.eagle.rpc.transport.bio.ThreadPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author lhs
@@ -22,6 +24,8 @@ import org.eagle.rpc.transport.bio.ThreadPool;
  */
 public class ServerEndPoint extends AbstractEndPoint{
 
+	private static Logger logger=LoggerFactory.getLogger(ServerEndPoint.class);
+	
 	private ServerSocket serverSocket;
 
 	private ThreadPool threadPool;
@@ -58,6 +62,8 @@ public class ServerEndPoint extends AbstractEndPoint{
 		try{
 			while(true){
 				Socket socket=serverSocket.accept();
+				
+				logger.info("接收到请求"+socket);
 				
 				// 接收socket，开启线程处理。这是一个长连接，保持在调用客户端与服务器之间
 				Processor processor=new SocketProcessor(socket);

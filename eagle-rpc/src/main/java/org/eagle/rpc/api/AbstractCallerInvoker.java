@@ -32,9 +32,11 @@ public abstract class AbstractCallerInvoker implements Lifecycle,Invoker{
 	 * @throws RPCException 
 	 * @description caller的通用逻辑：
 	 * 		1.拼装request（具体实现交由子类来做，因为不同协议有不同的请求格式）
-	 *     2.发送请求消息
-	 *     3.等待响应。（利用锁机制保证在并发情况下，响应能正确送达发送该请求的线程）
-	 *     4.根据响应状态：1)调用成功，直接返回result; 2)调用失败，向上抛出异常
+	 *     2.将caller添加到callerPool池中
+	 *     3.将请求编码成二进制
+	 *     4.发送请求消息
+	 *     5.等待响应。（利用锁机制保证在并发情况下，响应能正确送达发送该请求的线程）
+	 *     6.根据响应状态：1)调用成功，直接返回result; 2)调用失败，向上抛出异常
 	 */
 	public Object invoke(Caller caller) throws RPCException{
 		
@@ -58,6 +60,9 @@ public abstract class AbstractCallerInvoker implements Lifecycle,Invoker{
 		}
 		
 		Object result=dealResponse(caller); 
+		
+		//让GC回收
+		caller=null;
 		
 		return result;
 	}
