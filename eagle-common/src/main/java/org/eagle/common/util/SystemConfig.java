@@ -38,5 +38,8 @@ public class SystemConfig {
 		return System.getProperty(key);
 	}
 	
-	
+	public static void main(String[] args) {
+		String port=getEnvVariable("java_service_port");
+		System.out.println(port);
+	}
 }
