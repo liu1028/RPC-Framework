@@ -18,7 +18,7 @@
 	<!-- Service 实体 -->
 	<bean id="animalImpl" class="org.eagle.boot.impl.AnimalImpl" />
 	
-	<bean class="org.eagle.boot.ServerBootStrap" />
+	<bean class="org.eagle.boot.ServerBootStrap" init-method="init"/>
 
 	<bean class="org.eagle.core.Exporter">
 		<constructor-arg name="interfaceClz" type="java.lang.Class" value="org.eagle.boot.api.Animal" />

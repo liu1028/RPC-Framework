@@ -1,7 +1,11 @@
 package org.eagle.boot;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -52,5 +56,15 @@ public class ClientBoot {
 		
 		String str=animal.echo("hello", 23, 0.34, 0.31f, true, (short)23, (byte) 2);
 		System.out.println(str);
+		
+		Calendar cal=Calendar.getInstance();
+		Date date1=cal.getTime();
+		cal.add(Calendar.DAY_OF_MONTH, -20);
+		Date date2=cal.getTime();
+		BigInteger inte=new BigInteger("11111222222244444");
+		BigDecimal decimal=new BigDecimal("353453434234.45332");
+		
+		String ss=animal.specialPrimitive(date1, date2, inte, decimal);
+		System.out.println(ss);
 	}
 }
