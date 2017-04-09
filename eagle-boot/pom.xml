@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>my.senix</groupId>
 		<artifactId>eagle-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 
 	<artifactId>eagle-boot</artifactId>
@@ -94,16 +94,13 @@
 						</goals>
 						<configuration>
 							<transformers>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+								<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
 									<resource>META-INF/spring.handlers</resource>
 								</transformer>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>org.eagle.boot.ServerBoot</mainClass>
 								</transformer>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+								<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
 									<resource>META-INF/spring.schemas</resource>
 								</transformer>
 							</transformers>
@@ -111,6 +108,8 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			
 		</plugins>
 	</build>
 
