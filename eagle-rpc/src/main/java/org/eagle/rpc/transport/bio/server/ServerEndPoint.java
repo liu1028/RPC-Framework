@@ -36,6 +36,11 @@ public class ServerEndPoint extends AbstractEndPoint{
 		this.threadPool=new ThreadPool();
 	}
 	
+	public void init(Integer port){
+		setPort(port);
+		init();
+	}
+	
 	public void init() {
 		((Lifecycle)threadPool).init();
 		
@@ -44,12 +49,12 @@ public class ServerEndPoint extends AbstractEndPoint{
 			 
 			serverSocket = new ServerSocket(port);
 			
-			System.out.println("  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-			System.out.println("  @                                                                                     ");
-			System.out.println("  @                服务绑定地址：0.0.0.0   端口："+port+"                      ");
-			System.out.println("  @               上报地址：234.13.1.4  端口："+port+"                        ");
-			System.out.println("  @                                                                                     ");
-			System.out.println("  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			System.out.println("  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			System.out.println("  @                                                                                                     ");
+			System.out.println("  @                服务绑定地址：0.0.0.0   端口："+port+"                                      ");
+			System.out.println("  @               上报地址：234.13.1.4  端口："+port+"                                        ");
+			System.out.println("  @                                                                                                      ");
+			System.out.println("  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		} catch (Exception e) {
 			e.printStackTrace();
 			

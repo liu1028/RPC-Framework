@@ -1,7 +1,5 @@
 package org.eagle.rpc.api;
 
-import javax.swing.text.html.HTMLEditorKit.LinkController;
-
 import org.apache.commons.lang3.StringUtils;
 import org.eagle.common.Constants;
 import org.eagle.common.api.Lifecycle;
@@ -11,15 +9,28 @@ import org.eagle.common.util.SystemConfig;
 
 public abstract class AbstractEndPoint implements Lifecycle{
 
-	private int port;
+	private Integer port;
 	
 	protected int getPort() throws RPCException{
+		
+		if(port!=null){
+			try{
+				return validatePort(port);
+			}catch(RPCException e){
+				e.printStackTrace();
+			}
+		}
+		
 		//从环境变量获取端口
 		String portStr = SystemConfig.getEnvVariable(Constants.JAVA_SERVICE_PORT);
 		
 		//校验并返回端口
 		port= validatePort(portStr);
 		return port;
+	}
+	
+	private int validatePort(Integer port) throws RPCException{
+		return validatePort(port.toString());
 	}
 	
 	/**
@@ -44,4 +55,7 @@ public abstract class AbstractEndPoint implements Lifecycle{
 		}
 	}
 	
+	protected void setPort(Integer port){
+		this.port=port;
+	}
 }

@@ -36,12 +36,18 @@ public class ReferObjContext implements BeanFactory,MethodFactory,Lifecycle{
 	 */
 	private ReferObjContext(){
 	}
+
+	public void init(List<Exporter> exporters) throws RPCException{
+		init();
+		createContainer(exporters);
+	}
 	
 	public void init(){
 		container=new ReferObjContainer();
 		((Lifecycle)container).init();
 	}
-
+	
+	
 	public void start() {
 		//Nothing need to do....
 	}
