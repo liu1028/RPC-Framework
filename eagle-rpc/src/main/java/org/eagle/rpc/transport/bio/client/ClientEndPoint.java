@@ -48,7 +48,7 @@ public class ClientEndPoint extends AbstractEndPoint{
 				//并加入连接池
 				connectionPool.put(connKey, conn);
 				
-				//TODO：开启读线程.连接同一个服务器，复用一个TCP连接
+				//开启读线程.连接同一个服务器，复用一个TCP连接
 				new ResponseDealer(conn,connKey).start();
 			}
 		}

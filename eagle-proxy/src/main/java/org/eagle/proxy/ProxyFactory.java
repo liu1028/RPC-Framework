@@ -13,15 +13,15 @@ import org.eagle.common.exception.RPCExcptionStatus;
 public class ProxyFactory {
 
 	@SuppressWarnings("unchecked")
-	public static <T> T createProxy(Class<T> interfaceClz,String serviceName) throws RPCException{
-		if(!interfaceClz.isInterface()){
+	public static <T> T createProxy(Class<T> clz,String serviceName) throws RPCException{
+		if(!clz.isInterface()){
 			throw new  RPCException(RPCExcptionStatus.CLIENT_CALL_NOT_INTERFACE);
 		}
 		
 		ClientBroker broker=new ClientBroker(serviceName);
 		
-		return (T)Proxy.newProxyInstance(interfaceClz.getClassLoader(),
-				new Class<?>[]{interfaceClz}, broker);
+		return (T)Proxy.newProxyInstance(clz.getClassLoader(),
+				new Class<?>[]{clz}, broker);
 		
 	}
 }

@@ -7,21 +7,21 @@ package org.eagle.core;
  */
 public class Exporter {
 
-	private Class<?> interfaceClz;
+	private Class<?> clz;
 	
 	private Object obj;
 	
-	public Exporter(Class<?> interfaceClz,Object obj){
-		this.interfaceClz=interfaceClz;
+	public Exporter(Class<?> clz,Object obj){
+		this.clz=clz;
 		this.obj=obj;
 	}
 
 	public Class<?> getInterfaceClz() {
-		return interfaceClz;
+		return clz;
 	}
 
 	public void setInterfaceClz(Class<?> interfaceClz) {
-		this.interfaceClz = interfaceClz;
+		this.clz = interfaceClz;
 	}
 
 	public Object getObj() {

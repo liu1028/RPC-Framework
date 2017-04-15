@@ -1,4 +1,4 @@
-package org.eagle.registration.entity;
+package org.eagle.registration.common;
 
 import java.util.List;
 
@@ -16,13 +16,16 @@ public class RegistryInfo {
 	private String host;
 	
 	//服务主机端口
-	private String port;
+	private Integer port;
 	
 	//服务启动方名称(用于路由)
 	private String callee;
 	
 	//服务暴露的API列表
 	private List<String> apis;
+	
+	//权重。服务器性能越好，权重越大
+	private Integer weight;
 
 	public String getService() {
 		return service;
@@ -40,11 +43,11 @@ public class RegistryInfo {
 		this.host = host;
 	}
 
-	public String getPort() {
+	public Integer getPort() {
 		return port;
 	}
 
-	public void setPort(String port) {
+	public void setPort(Integer port) {
 		this.port = port;
 	}
 
@@ -63,6 +66,13 @@ public class RegistryInfo {
 	public void setApis(List<String> apis) {
 		this.apis = apis;
 	}
-	
+
+	public Integer getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Integer weight) {
+		this.weight = weight;
+	}
 	
 }

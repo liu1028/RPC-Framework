@@ -29,7 +29,7 @@ public class ClientBroker implements InvocationHandler{
 		
 		
 		//当前假设已经读到host，port
-		String host="192.168.31.3";
+		String host="192.168.31.2";
 		int port=40001;
 		
 		//一个具体的调用实体类，组合了request，response
