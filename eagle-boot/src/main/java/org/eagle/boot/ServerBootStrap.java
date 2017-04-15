@@ -1,16 +1,30 @@
 package org.eagle.boot;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.eagle.common.exception.RPCException;
+import org.eagle.common.exception.RPCExcptionStatus;
+import org.eagle.common.util.DataStreamHelper;
+import org.eagle.common.util.SequGenerator;
 import org.eagle.core.Exporter;
 import org.eagle.core.ReferObjContext;
+import org.eagle.registration.ZKRegistry;
+import org.eagle.registration.common.RegistryInfo;
 import org.eagle.rpc.transport.bio.server.ServerEndPoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * @author lhs
@@ -19,6 +33,8 @@ import org.springframework.context.ApplicationContextAware;
  */
 public class ServerBootStrap implements ApplicationContextAware {
 
+	private static final Logger logger=LoggerFactory.getLogger(ServerBootStrap.class);
+	
 	private ApplicationContext applicationContext;
 	
 	private String zkAddress;
@@ -27,7 +43,11 @@ public class ServerBootStrap implements ApplicationContextAware {
 	
 	private Integer port;
 	
-	private String reportHost;
+//	private String reportHost;
+	
+	private Integer weight;
+	
+	private ZKRegistry zkRegistry;
 
 	public ServerBootStrap() {
 
@@ -70,19 +90,50 @@ public class ServerBootStrap implements ApplicationContextAware {
 	}
 
 	/**
+	 * @throws RPCException 
 	 * @description 初始化zookeeper
 	 */
-	private void initZookeeper() {
-		// TODO 初始化zookeeper
-		
+	private void initZookeeper() throws RPCException {
+		try{
+			zkRegistry=new ZKRegistry(zkAddress);
+		}catch(Exception ex){
+			throw new RPCException(RPCExcptionStatus.SERVER_CONNECT_ZOOKEEPER_TIMEOUT);
+		}
 	}
 
 	/**
+	 * @throws RPCException 
+	 * @throws UnknownHostException 
 	 * @description 上报ZK服务端配置的元信息
 	 */
-	private void reportMe() {
-		// TODO 上报ZK服务端配置的元信息
+	private static final String calleeFileName="/callee";
+	private void reportMe() throws RPCException  {
+		RegistryInfo info=new RegistryInfo();
+		info.setService(servicePath);
+		try{
+			info.setHost(InetAddress.getLocalHost().getHostAddress());
+		}catch(Exception e){
+			throw new RPCException("不能获取本地ip地址！");
+		}
+		info.setPort(port);
+		info.setWeight(weight);
+		
+		ReferObjContext context = ReferObjContext.getInstance();
+		info.setApis(context.getAPINames());
+		
+		InputStream in=this.getClass().getResourceAsStream(calleeFileName);
+		String callee=DataStreamHelper.output2LittleBytesAndGC(in, 20);
+		
+		if(callee==null){
+			callee=SequGenerator.withoutMultiSecond().suffixFix(5).gen();
+		}
+		info.setCallee(callee);
+		
+		logger.info("上报的数据为："+JSONObject.toJSON(info));
+		
+		zkRegistry.register(info);
 	}
+	
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
@@ -113,11 +164,19 @@ public class ServerBootStrap implements ApplicationContextAware {
 		this.port = port;
 	}
 
-	public String getReportHost() {
+/*	public String getReportHost() {
 		return reportHost;
 	}
 
 	public void setReportHost(String reportHost) {
 		this.reportHost = reportHost;
+	}*/
+
+	public Integer getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Integer weight) {
+		this.weight = weight;
 	}
 }

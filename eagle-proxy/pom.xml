@@ -22,6 +22,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>my.senix</groupId>
+			<artifactId>eagle-registration</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>my.senix</groupId>
 			<artifactId>eagle-rpc</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>

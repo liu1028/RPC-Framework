@@ -1,13 +1,18 @@
 package org.eagle.core;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap.KeySetView;
+import java.util.stream.Collectors;
 
 import org.eagle.common.api.Lifecycle;
 import org.eagle.core.api.BeanFactory;
 import org.eagle.core.api.MethodFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
 
 /**
  * @author lhs
@@ -79,6 +84,12 @@ public class ReferObjContainer implements BeanFactory,MethodFactory,Lifecycle{
 		return false;
 	}	
 
+	public List<String> getAPINames(){
+		KeySetView<String,Object> view= instanceMap.keySet();
+		List<String> apis=view.stream().collect(Collectors.toList());
+		return apis;
+	}
+	
 	public void start() {
 		
 	}

@@ -10,7 +10,7 @@ public interface Valve {
 	/**
 	 * @description 进行真正的逻辑判断处理，返回被调者
 	 */
-	String handle(String matcher);
+	String handle(String ap);
 	
 	/**
 	 * @description 设置下一个阀

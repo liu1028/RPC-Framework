@@ -2,19 +2,24 @@ package org.eagle.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 
 import org.eagle.common.exception.RPCException;
+import org.eagle.registration.ZKDiscovery;
+import org.eagle.registration.router.Valve;
 import org.eagle.rpc.transport.bio.client.Caller;
 import org.eagle.rpc.transport.bio.client.CallerInvoker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Splitter;
+
 public class ClientBroker implements InvocationHandler{
 
 	private Logger logger=LoggerFactory.getLogger(ClientBroker.class);
 	
-	//TODO：通过zk获取host+port.zkClient也必须是单例的（初始化上移到bootstrap中）
-
+	//获取ZK单例
+	private ZKDiscovery zkDiscovery=ZKDiscovery.getInstance();
 	
 	private String serviceName;
 	
@@ -25,12 +30,20 @@ public class ClientBroker implements InvocationHandler{
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		
-		 //TODO:这里获取zk单例，根据服务名读取具体的host+port
+		 //获取路由匹配责任链，返回对应的url
+		Valve valve=zkDiscovery.getValve(serviceName);
+		if(valve==null){
+			throw new RPCException("没有找到当前可用实例！");
+		}
 		
+		String url=valve.handle(method.getName());
 		
-		//当前假设已经读到host，port
-		String host="192.168.31.2";
-		int port=40001;
+		Splitter splitter=Splitter.on(":").trimResults();
+		Iterable<String> iter=splitter.split(url);
+		Iterator<String> iterator=iter.iterator();
+		
+		String host=iterator.next();
+		int port=Integer.valueOf(iterator.next());
 		
 		//一个具体的调用实体类，组合了request，response
 		Caller caller=new Caller();

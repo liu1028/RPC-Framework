@@ -76,7 +76,7 @@ public class AnimalImpl implements Animal {
 			BigInteger bigInt, BigDecimal decimal) {
 		System.out.println(date+"\n"+date2+"\n"+bigInt+"\n"+decimal);
 		
-		return null;
+		return "special";
 	}
 
 }

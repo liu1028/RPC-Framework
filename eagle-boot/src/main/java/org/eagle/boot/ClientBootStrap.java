@@ -2,10 +2,17 @@ package org.eagle.boot;
 
 import java.util.List;
 
+import org.eagle.common.exception.RPCException;
+import org.eagle.common.exception.RPCExcptionStatus;
+import org.eagle.registration.ZKDiscovery;
 import org.eagle.rpc.transport.bio.client.CallerInvoker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClientBootStrap {
 
+	private static Logger logger=LoggerFactory.getLogger(ClientBootStrap.class);
+	
 	private List<String> serviceNames;
 	
 	private String zkAddr;
@@ -14,18 +21,26 @@ public class ClientBootStrap {
 		
 	}
 	
-	public void init(){
-		
+	public void init() throws RPCException{
+		logger.info("初始化zkClient。。。");
 		initZkClient();
 		
+		logger.info("初始化callerInvoker");
 		initInvoker();
 	}
 	
-	private void initZkClient() {
+	private void initZkClient() throws RPCException {
 		
-		serviceNames.forEach(System.out::println);
+		ZKDiscovery zkDiscovery=ZKDiscovery.getInstance();
 		
-		System.out.println(zkAddr);
+		try{
+			zkDiscovery.initZK(zkAddr);
+		}catch(Exception ex){
+			throw new RPCException(RPCExcptionStatus.CLIENT_CONNECT_SERVER_FAILURE);
+		}
+		
+		zkDiscovery.discover(serviceNames);
+		
 	}
 
 	public void initInvoker(){

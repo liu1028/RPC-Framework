@@ -9,11 +9,11 @@ public class RouteValve implements Valve {
 	private String api;
 	
 	@Override
-	public String handle(String api) {
-		if(api.equalsIgnoreCase(api)){
+	public String handle(String match) {
+		if(api.equalsIgnoreCase(match)){
 			return url;
 		}else{
-			return next.handle(api);
+			return next.handle(match);
 		}
 	}
 

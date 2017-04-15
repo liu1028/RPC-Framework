@@ -134,6 +134,11 @@ public class ReferObjContext implements BeanFactory,MethodFactory,Lifecycle{
 		return container.getMethod(apiName);
 	}
 
+	//获取方法名称列表
+	public List<String> getAPINames(){
+		return container.getAPINames();
+	}
+	
 	public void addMethod(String apiName, Method method) {
 		 container.addMethod(apiName, method);
 	}

@@ -8,7 +8,7 @@ import org.I0Itec.zkclient.exception.ZkMarshallingError;
 import org.I0Itec.zkclient.serialize.ZkSerializer;
 import org.apache.zookeeper.common.PathUtils;
 
-public class AbstractGenericZK {
+public abstract class AbstractGenericZK {
 	
 	private final int sessionTimeout = 10000;
 
@@ -16,7 +16,7 @@ public class AbstractGenericZK {
 	
 	private final Charset charset = Charset.forName("UTF-8");
 	
-	protected ZkClient zkClient;
+	private ZkClient zkClient;
 	
 	protected final int instanceUpperBound=50;
 
@@ -32,6 +32,12 @@ public class AbstractGenericZK {
 
 	protected final String routerPathTemplate = servicePrefix + "%s/policy/router";
 
+	protected final String insAbbrevPath="/instance";
+	
+	protected final String policyAbbrevPath="/policy";
+	
+	protected final String routeAbbrevPath=policyAbbrevPath+"/router";
+	
 	public AbstractGenericZK(){
 		
 	}
@@ -63,20 +69,51 @@ public class AbstractGenericZK {
 		return val;
 	}
 	
+	protected void writeData(String path,String data){
+		PathUtils.validatePath(path);
+		zkClient.writeData(path, data);
+	}
+	
+	protected void createParentsPersistent(String path){
+		PathUtils.validatePath(path);
+		if(!zkClient.exists(path)){
+			zkClient.createPersistent(path, true);
+		}
+	}
+	
+	protected void createEphmeral(String path){
+		PathUtils.validatePath(path);
+		if(!zkClient.exists(path)){
+			zkClient.createEphemeral(path);
+		}
+	}
+	
+	protected void createEphmeral(String path,Object data){
+		PathUtils.validatePath(path);
+		if(!zkClient.exists(path)){
+			zkClient.createEphemeral(path,data);
+		}
+	}
+	
 	private void createZKClient(String zkAddr){
 		this.zkClient = new ZkClient(zkAddr, sessionTimeout, connectionTimeout, new ZkSerializer() {
 
 			@Override
 			public byte[] serialize(Object data) throws ZkMarshallingError {
 				String content = (String) data;
-				return content.getBytes(Charset.forName("UTF-8"));
+				return content.getBytes(charset);
 			}
 
 			@Override
 			public Object deserialize(byte[] data) throws ZkMarshallingError {
-				String content = new String(data, Charset.forName("UTF-8"));
+				String content = new String(data, charset);
 				return content;
 			}
 		});
 	}
+
+	protected ZkClient getZkClient() {
+		return zkClient;
+	}
+	
 }

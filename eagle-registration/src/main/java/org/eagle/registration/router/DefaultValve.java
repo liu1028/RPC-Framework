@@ -48,7 +48,7 @@ public class DefaultValve implements Valve{
 		int sum=0;
 		weights[0]=0;
 		for(int i=1;i<=instanceNum;i++){
-			Integer weight=registries.get(i).getWeight();
+			Integer weight=registries.get(i-1).getWeight();
 			if(weight==null){
 				sum+=defaultWeight;
 				weights[i]=sum;
@@ -70,7 +70,7 @@ public class DefaultValve implements Valve{
 			}
 		}
 		
-		return hostIndex;
+		return hostIndex-1;
 	}
 	
 	

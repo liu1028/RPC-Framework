@@ -29,6 +29,8 @@ public enum RPCExcptionStatus {
 	SOCKET_SEND_DATA_FAILURE("9001","socket输出数据失败"),
 	SOCKET_GET_STREAM_FAILURE("9002","获取socket输入或输出流异常"),
 	CLIENT_CONNECT_SERVER_FAILURE("9003","客户端连接服务器失败"),
+	SERVER_CONNECT_ZOOKEEPER_TIMEOUT("9004","服务器连接ZK超时"),
+	CLIENT_CONNECT_ZOOKEEPER_TIMEOUT("9005","客户端连接ZK超时"),
 	
 	/**
 	 * 暴露的接口中相关的异常信息。状态码：4000-4100
@@ -47,7 +49,13 @@ public enum RPCExcptionStatus {
 	VERSION_NOT_SUPPORT_COMPLEX_PARAMETERIZED_TYPE("5002","当前版本不支持复杂的泛型类型，包括：泛型的继承，泛型的嵌套。若有，请外套一个类来包装"),
 	
 	
-	CLIENT_CALL_NOT_INTERFACE("5003","客户端代理的必须是接口！");
+	CLIENT_CALL_NOT_INTERFACE("5003","客户端代理的必须是接口！"),
+	
+	
+	/**
+	 * 路由文件规则。状态码：6000-6100
+	 */
+	ROUTE_FILE_PARSE_FAILURE("6000","路由文件解析失败,格式错误");
 
 	
 	private String statusCode;

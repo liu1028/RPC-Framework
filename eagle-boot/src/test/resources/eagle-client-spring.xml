@@ -13,13 +13,14 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-	<bean class="org.eagle.boot.ClientBootStrap" init-method="init" p:zkAddr="23.4.5.6:2181">
+	<bean class="org.eagle.boot.ClientBootStrap" init-method="init" p:zkAddr="192.168.31.2:2181">
 		<property name="serviceNames">
 			<list>
-				<value>/a/afe</value>
+				<value>/my/first/app</value>
+				<!-- <value>/a/afe</value>
 				<value>/b/dsa</value>
 				<value>/eg/few</value>
-				<value>/a/fer32</value>
+				<value>/a/fer32</value> -->
 			</list>
 		</property>
 	</bean>
@@ -32,7 +33,7 @@
 	</bean> -->
 	
 	<bean id="animal" class="org.eagle.proxy.ProxyFactory" factory-method="createProxy"
-		c:clz="org.eagle.boot.api.Animal" c:serviceName="/my/senix/app" />
+		c:clz="org.eagle.boot.api.Animal" c:serviceName="/my/first/app" />
 			
 
 </beans>
