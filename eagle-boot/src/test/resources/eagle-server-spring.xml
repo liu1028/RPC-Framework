@@ -15,22 +15,29 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 	
+	<context:component-scan base-package="org.eagle.boot" />
+	
 	<!-- Service 实体 -->
 	<bean id="animalImpl" class="org.eagle.boot.impl.AnimalImpl" />
 	
 	<bean class="org.eagle.boot.ServerBootStrap" init-method="init">
 		<property name="zkAddress" value="192.168.31.2:2181" />
+		<property name="reportHost" value="192.168.31.2" />
 		<property name="servicePath" value="/my/first/app" />
 		<property name="port" value="40226" />
 		<property name="weight" value="5" />
-	</bean>
-
-<!-- 	<bean class="org.eagle.core.Exporter">
-		<constructor-arg name="interfaceClz" type="java.lang.Class" value="org.eagle.boot.api.Animal" />
-		<constructor-arg name="obj" ref="animalImpl" />
-	</bean> -->
-	
+	</bean>	
 	<bean class="org.eagle.core.Exporter" c:clz="org.eagle.boot.api.Animal" c:obj-ref="animalImpl" />
 	
+	
+	<bean class="org.eagle.boot.ClientBootStrap" init-method="init" p:zkAddr="192.168.31.2:2181">
+		<property name="serviceNames">
+			<list>
+				<value>/my/callmyapple/app</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="callMyApple" class="org.eagle.proxy.ProxyFactory" factory-method="createProxy"
+		c:clz="org.eagle.boot.api.ICallMyApple" c:serviceName="/my/callmyapple/app" />
 	
 </beans>

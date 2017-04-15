@@ -41,6 +41,8 @@ public class ServerBootStrap implements ApplicationContextAware {
 	
 	private String servicePath;
 	
+	private String reportHost;
+	
 	private Integer port;
 	
 //	private String reportHost;
@@ -110,11 +112,17 @@ public class ServerBootStrap implements ApplicationContextAware {
 	private void reportMe() throws RPCException  {
 		RegistryInfo info=new RegistryInfo();
 		info.setService(servicePath);
-		try{
+/*		try{
 			info.setHost(InetAddress.getLocalHost().getHostAddress());
 		}catch(Exception e){
 			throw new RPCException("不能获取本地ip地址！");
 		}
+		*/
+
+		if(reportHost==null){
+			throw new RPCException("必须给出本地上传ZK的本地联网IP地址！");
+		}
+		info.setHost(reportHost);
 		info.setPort(port);
 		info.setWeight(weight);
 		
@@ -164,13 +172,13 @@ public class ServerBootStrap implements ApplicationContextAware {
 		this.port = port;
 	}
 
-/*	public String getReportHost() {
+	public String getReportHost() {
 		return reportHost;
 	}
 
 	public void setReportHost(String reportHost) {
 		this.reportHost = reportHost;
-	}*/
+	}
 
 	public Integer getWeight() {
 		return weight;
