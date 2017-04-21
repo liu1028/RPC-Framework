@@ -2,10 +2,8 @@ package org.eagle.registration.router;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
-import org.eagle.common.exception.RPCException;
 import org.eagle.common.exception.RPCExcptionStatus;
 import org.eagle.registration.common.RegistryInfo;
 import org.slf4j.Logger;

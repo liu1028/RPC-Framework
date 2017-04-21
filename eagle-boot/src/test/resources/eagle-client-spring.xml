@@ -17,20 +17,11 @@
 		<property name="serviceNames">
 			<list>
 				<value>/my/first/app</value>
-				<!-- <value>/a/afe</value>
-				<value>/b/dsa</value>
-				<value>/eg/few</value>
-				<value>/a/fer32</value> -->
 			</list>
 		</property>
 	</bean>
 
-	<!-- <bean id="proxyFactory" class="org.eagle.proxy.ProxyFactory" /> -->
 	
-<!-- 	<bean id="animal" class="org.eagle.proxy.ProxyFactory" factory-method="createProxy">
-		<constructor-arg name="interfaceClz" type="java.lang.Class" value="org.eagle.boot.api.Animal" />
-		<constructor-arg name="serviceName" value="/my/senix/app" />
-	</bean> -->
 	
 	<bean id="animal" class="org.eagle.proxy.ProxyFactory" factory-method="createProxy"
 		c:clz="org.eagle.boot.api.Animal" c:serviceName="/my/first/app" />

@@ -21,7 +21,7 @@
   	
   	<dependency>
   		<groupId>my.senix</groupId>
-  		<artifactId>eagle-core</artifactId>
+  		<artifactId>eagle-repository</artifactId>
   		<version>${project.parent.version}</version>
   	</dependency>
   	

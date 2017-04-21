@@ -8,7 +8,7 @@
     <version>1.0</version>
   </parent>
   
-  <artifactId>eagle-core</artifactId>
+  <artifactId>eagle-repository</artifactId>
   <version>${project.parent.version}</version>
   
   <name>eagle-core</name>
@@ -30,4 +30,8 @@
       <artifactId>junit</artifactId>
     </dependency>
   </dependencies>
+  
+  <build>
+  	<finalName>eagle-repository</finalName>
+  </build>
 </project>

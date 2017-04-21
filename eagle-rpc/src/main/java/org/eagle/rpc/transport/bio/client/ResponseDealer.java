@@ -42,7 +42,6 @@ public class ResponseDealer extends Thread{
 					}
 					pool.remove(tag);
 				}
-				
 			}
 		}catch(IOException  | IllegalMonitorStateException e){
 			ConnectionPool connectionPool=ConnectionPool.getInstance();

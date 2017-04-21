@@ -13,7 +13,7 @@
 	<modules>
 		<module>eagle-protocol</module>
 		<module>eagle-rpc</module>
-		<module>eagle-core</module>
+		<module>eagle-repository</module>
 		<module>eagle-proxy</module>
 		<module>eagle-registration</module>
 
